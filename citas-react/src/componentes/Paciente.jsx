@@ -1,23 +1,23 @@
 import React from 'react'
 
-export const Paciente = () => {
+export const Paciente = ({paciente}) => {
   return (
     <>
         <div className='m-3 bg-white shadow-md px-5 py-10 rounded-xl'>
            <p className=' font-bold mb-3 text-gray-700 uppercase'> Nombre: {""}
-             <span className=' font-normal normal-case'>Hook</span>
+             <span className=' font-normal normal-case'>{paciente.nombre}</span>
            </p>
            <p className=' font-bold mb-3 text-gray-700 uppercase'> Propietario: {""}
-             <span className=' font-normal normal-case'>Franz</span>
+             <span className=' font-normal normal-case'>{paciente.propietario}</span>
            </p>
            <p className=' font-bold mb-3 text-gray-700 uppercase'> EMail: {""}
-             <span className=' font-normal normal-case'>gavino_10@hotmail.es</span>
+             <span className=' font-normal normal-case'>{paciente.email}</span>
            </p>
            <p className=' font-bold mb-3 text-gray-700 uppercase'> Alta: {""}
-             <span className=' font-normal normal-case'>12-04-1995</span>
+             <span className=' font-normal normal-case'>{paciente.alta}</span>
            </p>
            <p className=' font-bold mb-3 text-gray-700 uppercase'> Sintomas: {""}
-             <span className=' font-normal normal-case'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint minus tempora praesentium nemo fuga. Autem, sint ut maiores quibusdam eaque quia soluta placeat, quas esse dolores pariatur unde omnis numquam?</span>
+             <span className=' font-normal normal-case'> {paciente.sintomas}</span>
            </p>
         </div>
     </>
