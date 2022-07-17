@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, {  useEffect, useState } from 'react'
 import { Error } from './Error';
 
-const Formulario = ({pacientes,setpacientes}) => {
+const Formulario = ({pacientes,setpacientes, paciente, setpaciente}) => {
   const [nombre, setnombre] = useState('');
   const [propietario, setpropietario] = useState('');
   const [email, setemail] = useState('');
@@ -10,6 +10,19 @@ const Formulario = ({pacientes,setpacientes}) => {
 
   const [error, seterror] = useState(false);
 
+  useEffect(() => {
+    if(Object.keys(paciente).length>0){
+      setnombre(paciente.nombre);
+      setpropietario(paciente.propietario);
+      setemail(paciente.email);
+      setalta(paciente.alta);
+      setsintomas(paciente.sintomas);
+    }
+
+  }, [paciente])
+  
+  
+  
   const crearId=()=>{
     const random=Math.random().toString(36).substring(2);
     const datee=Date.now().toString(36);
@@ -29,10 +42,30 @@ const Formulario = ({pacientes,setpacientes}) => {
         propietario,
         email,
         alta,
-        sintomas,
-        id:crearId()
+        sintomas
       }
-      setpacientes([...pacientes,objetousuario]);
+      if (paciente.id) {
+        //editando registro
+        objetousuario.id=paciente.id
+
+        const pacientesActualizados=pacientes.map(pacienteState=>pacienteState.id===paciente.id ? objetousuario : pacienteState)
+
+        setpacientes(pacientesActualizados);
+        setpaciente({});
+
+      } else{
+        //nuevo registro
+        objetousuario.id=crearId();
+        setpacientes([...pacientes,objetousuario]);
+      }
+
+      
+      setnombre('');
+      setpropietario('');
+      setemail('');
+      setalta('');
+      setsintomas('');
+
   }
   return (
     <div className=" w-1/2">
@@ -60,7 +93,7 @@ const Formulario = ({pacientes,setpacientes}) => {
             <label htmlFor="sintomas" className=' block text-gray-700 uppercase font-bold'>sintomas</label>
             <textarea id="sintomas" value={sintomas} onChange={(e)=>setsintomas(e.target.value)}  className=" border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md" placeholder='Describe los sintomas'></textarea>
           </div>
-          <input type="submit"  className=" bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors" value="agregar paciente"/>
+          <input type="submit"  className=" bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors" value={paciente.id?'Editar Paciente' : 'Agregar Paciente'}/>
       </form>
     </div>
   )
